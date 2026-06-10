@@ -5,6 +5,10 @@ import TicketDetailModal from './components/TicketDetailModal'
 import CustomerProfiles from './components/CustomerProfiles'
 import Settings from './components/Settings'
 
+const API_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+  ? 'http://127.0.0.1:8083'
+  : 'https://osticket26.jaguarux.com/bot-api';
+
 function App() {
   const [activeTab, setActiveTab] = useState('tickets');
   const [activeTicket, setActiveTicket] = useState(null);
@@ -50,7 +54,7 @@ function App() {
         // Fetch Tickets
         if (activeTab === 'tickets') {
           setLoading(true);
-          const resT = await fetch('http://127.0.0.1:8083/api/tickets');
+          const resT = await fetch(`${API_URL}/api/tickets`);
           const dataT = await resT.json();
           if (dataT.ok) {
             const parsedTickets = dataT.tickets.map(t => ({
@@ -82,7 +86,7 @@ function App() {
         }
 
         // Fetch Maintenance Status
-        const resM = await fetch('http://127.0.0.1:8083/api/settings/maintenance');
+        const resM = await fetch(`${API_URL}/api/settings/maintenance`);
         const dataM = await resM.json();
         if (dataM.ok) setIsMaintenance(dataM.isMaintenanceMode);
       } catch (err) {

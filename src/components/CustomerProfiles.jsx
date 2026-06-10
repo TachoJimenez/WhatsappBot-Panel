@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from 'react';
 
+const API_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+  ? 'http://127.0.0.1:8083'
+  : 'https://osticket26.jaguarux.com/bot-api';
+
 const CustomerProfiles = () => {
   const [customers, setCustomers] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
@@ -9,7 +13,7 @@ const CustomerProfiles = () => {
   const [loadingHistory, setLoadingHistory] = useState(false);
 
   useEffect(() => {
-    fetch('http://127.0.0.1:8083/api/customers')
+    fetch(`${API_URL}/api/customers`)
       .then(res => res.json())
       .then(data => {
         if (data.ok) setCustomers(data.customers);
@@ -26,7 +30,7 @@ const CustomerProfiles = () => {
     setLoadingHistory(true);
     setHistory([]);
     try {
-      const res = await fetch(`http://127.0.0.1:8083/api/customers/${customer.telefono}`);
+      const res = await fetch(`${API_URL}/api/customers/${customer.telefono}`);
       const data = await res.json();
       if (data.ok) setHistory(data.history);
     } catch (err) {

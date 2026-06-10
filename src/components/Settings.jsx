@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from 'react';
 
+const API_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+  ? 'http://127.0.0.1:8083'
+  : 'https://osticket26.jaguarux.com/bot-api';
+
 const Settings = () => {
   const [isMaintenance, setIsMaintenance] = useState(false);
   const [loading, setLoading] = useState(true);
   const [updating, setUpdating] = useState(false);
 
   useEffect(() => {
-    fetch('http://127.0.0.1:8083/api/settings/maintenance')
+    fetch(`${API_URL}/api/settings/maintenance`)
       .then(res => res.json())
       .then(data => {
         if (data.ok) setIsMaintenance(data.isMaintenanceMode);
@@ -21,7 +25,7 @@ const Settings = () => {
   const handleToggle = async () => {
     setUpdating(true);
     try {
-      const res = await fetch('http://127.0.0.1:8083/api/settings/maintenance', {
+      const res = await fetch(`${API_URL}/api/settings/maintenance`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ active: !isMaintenance })
