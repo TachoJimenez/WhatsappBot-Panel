@@ -89,7 +89,7 @@ const TicketDetailModal = ({ ticket, onClose, onUpdateTicket }) => {
             {/* Read-Only Mode / Action Links */}
             <div style={{ padding: '24px', borderTop: '1px solid var(--glass-border)', display: 'flex', justifyContent: 'center', gap: '16px', flexWrap: 'wrap' }}>
               <a 
-                href={`https://outlook.live.com/mail/0/deeplink?search=Ticket%20${ticket.id.replace('#', '')}`} 
+                href={`https://outlook.live.com/mail/0/search/results?q=Ticket%20${ticket.id.replace('#', '')}`} 
                 target="_blank" 
                 rel="noreferrer"
                 style={{
