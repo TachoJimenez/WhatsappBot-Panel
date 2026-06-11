@@ -60,7 +60,7 @@ function App() {
             const parsedTickets = dataT.tickets.map(t => ({
               ...t,
               id: `#${t.externalId || t.id}`,
-              status: getStatusFromSubject(t.subject),
+              status: t.status || getStatusFromSubject(t.subject),
               priority: 'Media'
             }));
 
